@@ -2,16 +2,17 @@ import React from 'react'
 import {useState,useEffect} from 'react'
 import {Row,Col} from 'react-bootstrap'
 import CardComponents from './CardComponents'
+import { listRestaurants} from '../action/restaurantAction'
+import {useDispatch, useSelector} from 'react-redux'
 function Home() {
-    const [restaurants,setRestaurants] =useState([])
+ const  dispatch = useDispatch()
 
+ const restaurantData= useSelector(state=>state.restaurantReducer)
+
+ const {restaurants}= restaurantData
     useEffect(() => {
-      async function fetchData(){
-        await fetch('./restaurants.json')
-        .then((data)=>data.json())
-        .then((res)=>setRestaurants(res.restaurants))
-      }
-fetchData()
+      dispatch(listRestaurants())
+      
     }, [])
     console.log("my data is",restaurants)
 
